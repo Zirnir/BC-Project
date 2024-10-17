@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_my_task" inherit_id="project.portal_my_task" name="Portal: My Task with Testing" priority="10">
+        <xpath expr="//div[@id='card_body']" position="inside">
+            <div class="container test">
+                <h5>Testing</h5>
+                <t t-call="bc_project_workflow.portal_testing_table"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>

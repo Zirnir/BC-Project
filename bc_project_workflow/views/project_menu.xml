@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem
+            name="Test"
+            id="menu_test"
+            action="test_action"
+            parent="project.menu_main_pm"
+            sequence="1">
+    </menuitem>
+</odoo>

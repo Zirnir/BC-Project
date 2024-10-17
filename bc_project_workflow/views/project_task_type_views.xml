@@ -1,0 +1,15 @@
+<odoo>
+
+    <record id="inherited_task_type_view" model="ir.ui.view">
+        <field name="name">project.task.type.form.inherit</field>
+        <field name="model">project.task.type</field>
+        <field name="inherit_id" ref="project.task_type_edit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="in_progress_stage"/>
+                <field name="testing_stage"/>
+            </xpath>
+    </field>
+    </record>
+
+</odoo>

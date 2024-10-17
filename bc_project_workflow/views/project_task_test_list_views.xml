@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="view_test_tree" model="ir.ui.view">
+        <field name="name">project.task.test.tree</field>
+        <field name="model">project.task.test</field>
+        <field name="arch" type="xml">
+                <tree string="Test">
+                    <field name="create_date"/>                            
+                    <field name="name"/>                            
+                    <field name="description"/>                            
+                    <field name="valideted"/>                            
+                </tree>
+        </field>
+    </record>
+    <record id="views_test_form" model="ir.ui.view">
+        <field name="name">project.task.test.form</field>
+        <field name="model">project.task.test</field>
+        <field name="arch" type="xml">
+            <form string="Form_types">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="create_date"/>
+                        <field name="task_id"/>
+                        <field name="valideted"/>
+                    </group>
+                    <notebook>
+                        <page string="Info">                              
+                            <field name="description"/>                                
+                        </page>
+                        <page string="Refused Justify" invisible="valideted != 'refused'">                              
+                            <field name="refused_justify"/>                                
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>

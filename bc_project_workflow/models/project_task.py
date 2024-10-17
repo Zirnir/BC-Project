@@ -1,7 +1,10 @@
-from odoo import models, api
+from odoo import models, api, fields
 from odoo.exceptions import UserError
+
 class Task(models.Model):
     _inherit = "project.task"
+
+    test_ids = fields.One2many("project.task.test", "task_id")
 
     @api.model
     def create(self, values):
