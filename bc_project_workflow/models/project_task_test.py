@@ -1,5 +1,5 @@
-from odoo import fields, models, api
-from datetime import date, timedelta
+from odoo import fields, models
+from datetime import date
 
 class TaskTest (models.Model):
     _name = "project.task.test"
@@ -19,7 +19,6 @@ class TaskTest (models.Model):
 
     task_id = fields.Many2one("project.task")
 
-    
     def accepted(self):
         for record in self:
             record.valideted = 'accepted'

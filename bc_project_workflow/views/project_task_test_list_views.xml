@@ -5,10 +5,10 @@
         <field name="model">project.task.test</field>
         <field name="arch" type="xml">
                 <tree string="Test">
-                    <field name="create_date"/>                            
+                    <field name="create_date" readonly="1"/>                            
                     <field name="name"/>                            
                     <field name="description"/>                            
-                    <field name="valideted"/>                            
+                    <field name="valideted" readonly="1"/>                            
                 </tree>
         </field>
     </record>
@@ -20,8 +20,8 @@
                 <sheet>
                     <group>
                         <field name="name"/>
-                        <field name="create_date"/>
-                        <field name="task_id"/>
+                        <field name="create_date" readonly="1"/>
+                        <field name="task_id" readonly="1"/>
                         <field name="valideted"/>
                     </group>
                     <notebook>
@@ -29,7 +29,7 @@
                             <field name="description"/>                                
                         </page>
                         <page string="Refused Justify" invisible="valideted != 'refused'">                              
-                            <field name="refused_justify"/>                                
+                            <field name="refused_justify" readonly="1"/>                                
                         </page>
                     </notebook>
                 </sheet>
