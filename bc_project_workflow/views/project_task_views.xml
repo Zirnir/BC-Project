@@ -11,8 +11,8 @@
                         <tree string="Test" widget="one2many" decoration-success="valideted == 'accepted'" decoration-danger="valideted == 'refused'" editable="bottom">
                             <field name="create_date"/>                            
                             <field name="name"/>                            
-                            <field name="description"/>                            
-                            <field name="valideted"/>                            
+                            <field name="summary"/>                            
+                            <field name="valideted"/>                       
                         </tree>
                     </field>
                 </page>

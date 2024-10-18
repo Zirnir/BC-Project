@@ -9,6 +9,7 @@ publicWidget.registry.TaskTest = publicWidget.Widget.extend({
     events: {
         'click .accepted_test': '_onAccepted',
         'click .refused_test': '_onRefused',
+        'click .description_form' : '_onDescription',
         'submit .refused_partner_assign_form': '_onSubmitRefusal',
     },
 
@@ -57,6 +58,24 @@ publicWidget.registry.TaskTest = publicWidget.Widget.extend({
      * @private
      * @param {Event} ev
      */
+    _onDescription: function (ev) {
+        console.log("_onDescription");
+        ev.preventDefault();
+        ev.stopPropagation();
+        
+        const $link = $(ev.currentTarget); 
+        const testId = $link.data('test-id'); 
+
+        const $modal = $link.closest('.description').find('.modal_test_description');
+
+        $modal.find('textarea[name="description"]').val(testId);
+        $modal.modal('show');
+    },
+
+    /**
+     * @private
+     * @param {Event} ev
+     */
     _onAccepted: function (ev) {
         console.log("_onAccepted");
         ev.preventDefault();
@@ -92,14 +111,18 @@ publicWidget.registry.TaskTest = publicWidget.Widget.extend({
         console.log("Task ID:", taskTestId, "Justification:", justify); 
         if (!justify) {
             console.log("La justification est obligatoire");
+            alert("La justification est obligatoire. Veuillez entrer une raison.");
+            ev.stopPropagation();
+            $form.find('#comment_refused').focus();
             return;
         }
-
-        this._buttonExec($form.find('button[type="submit"]'), () => {
-            return this._refused(taskTestId, justify).then(() => {
-                $form.closest('.modal').modal('hide');
-                console.log("Justification soumise et modal fermée.");
+        if (justify) {
+            this._buttonExec($form.find('button[type="submit"]'), () => {
+                return this._refused(taskTestId, justify).then(() => {
+                    $form.closest('.modal').modal('hide');
+                    console.log("Justification soumise et modal fermée.");
+                });
             });
-        });
+        }
     },
 })

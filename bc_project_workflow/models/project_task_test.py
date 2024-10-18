@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import fields, models, api
 from datetime import date
 
 class TaskTest (models.Model):
@@ -6,18 +6,29 @@ class TaskTest (models.Model):
     _description = "Test of task"
 
     name = fields.Char()
-    description = fields.Text()
+    description = fields.Html(sanitize_attributes=False)
+    summary = fields.Html(compute = "_compute_summary" ,sanitize_attributes=False)
 
     create_date = fields.Date(default=lambda self: date.today())
 
     valideted = fields.Selection(
-        selection=[('accepted', 'Accepted'), ('refused', 'Refused')],
+        default = 'intest',
+        selection=[('accepted', 'Accepted'), ('refused', 'Refused'),('intest', 'In Test')],
         help = ""
     )
 
     refused_justify = fields.Text()
 
     task_id = fields.Many2one("project.task")
+
+    @api.depends('description')
+    def _compute_summary(self):
+        for record in self:
+            if record.description:
+                record.summary = record.description[:40]
+            else:
+                record.summary = str(record.name) + " de la tâche " + str(record.task_id.name) + " est en cours d'écriture."
+
 
     def accepted(self):
         for record in self:
