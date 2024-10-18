@@ -1,0 +1,22 @@
+<odoo>
+
+    <record id="inherited_task_form_view" model="ir.ui.view">
+        <field name="name">project.task.form.inherit</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page name="testing_page" string="Testing">
+                    <field name="test_ids">
+                        <tree string="Test" widget="one2many" decoration-success="valideted == 'accepted'" decoration-danger="valideted == 'refused'" editable="bottom">
+                            <field name="create_date"/>                            
+                            <field name="name"/>                            
+                            <field name="description"/>                            
+                            <field name="valideted"/>                            
+                        </tree>
+                    </field>
+                </page>
+            </notebook>
+        </field>
+    </record>
+</odoo>
