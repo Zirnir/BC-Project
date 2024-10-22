@@ -80,8 +80,13 @@ publicWidget.registry.TaskTest = publicWidget.Widget.extend({
         console.log("_onAccepted");
         ev.preventDefault();
         ev.stopPropagation();
+        const $testingElement = $(ev.currentTarget).closest('.testing');
+        const $stateElement = $(ev.currentTarget).closest('.test_state');
         const taskTestId = $(ev.currentTarget).closest('.testing').data('test-id');
-        this._buttonExec($(ev.currentTarget), () => this._accepted(taskTestId));
+        this._buttonExec($(ev.currentTarget), () => this._accepted(taskTestId)).then(() => {
+            $testingElement.hide();
+            $stateElement.show();
+        });
     },
     
 
@@ -95,6 +100,7 @@ publicWidget.registry.TaskTest = publicWidget.Widget.extend({
         ev.stopPropagation();
         const $modal = $(ev.currentTarget).closest('.testing').find('.modal_test_justify_refused');
         $modal.modal('show');
+
     },
 
     /**
@@ -107,6 +113,8 @@ publicWidget.registry.TaskTest = publicWidget.Widget.extend({
         const $form = $(ev.currentTarget);
         const taskTestId = $form.closest('.testing').data('test-id');
         const justify = $form.find('#comment_refused').val(); 
+        const $testingElement = $(ev.currentTarget).closest('.testing');
+        const $stateElement = $(ev.currentTarget).closest('.test_state');
 
         console.log("Task ID:", taskTestId, "Justification:", justify); 
         if (!justify) {
@@ -121,6 +129,8 @@ publicWidget.registry.TaskTest = publicWidget.Widget.extend({
                 return this._refused(taskTestId, justify).then(() => {
                     $form.closest('.modal').modal('hide');
                     console.log("Justification soumise et modal fermée.");
+                    $testingElement.hide();
+                    $stateElement.show();
                 });
             });
         }

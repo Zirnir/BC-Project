@@ -10,10 +10,10 @@
                 </tr>
             </thead>
             <tr t-foreach="task.test_ids" t-as="test">
-                <t t-if="test.description">
+                <t t-if="test.description and test.valideted">
                     <td><t t-esc="test.create_date" t-options='{"widget": "date"}'/></td> 
                     <td><t t-esc="test.name"/></td>
-                    <t t-if="test.valideted == 'intest'">
+                    <t>
                         <td class="description" t-att-data-test-id="test.id">
                             <a role="link" href="#" data-bs-toggle="modal" t-att-data-bs-target="'#modal_test_description_' + str(test.id)">
                                 <t t-esc="test.summary"/>
@@ -40,12 +40,6 @@
                                 </div>
                             </div>
                         </td>
-                    </t>
-                    <t t-if="test.valideted != 'intest'">
-                        <td><t t-esc="test.summary"/></td>
-                    </t>
-                    <t t-if="test.valideted != 'intest'">
-                        <td><t t-esc="test.valideted"/></td>
                     </t>
                     <t t-if="test.valideted != 'accepted' and test.valideted != 'refused'">
                         <td class="testing" t-att-data-test-id="test.id">

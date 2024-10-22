@@ -13,7 +13,8 @@
                         <tree>
                             <field name="name"/>
                         </tree>
-                    </field>                                
+                    </field> 
+                                                
                 </tree>
         </field>
     </record>
