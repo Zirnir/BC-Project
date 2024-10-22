@@ -10,7 +10,7 @@
                 </tr>
             </thead>
             <tr t-foreach="task.test_ids" t-as="test">
-                <t t-if="test.description and test.valideted">
+                <t t-if="test.description and test.validated">
                     <td><t t-esc="test.create_date" t-options='{"widget": "date"}'/></td> 
                     <td><t t-esc="test.name"/></td>
                     <t>
@@ -41,7 +41,7 @@
                             </div>
                         </td>
                     </t>
-                    <t t-if="test.valideted != 'accepted' and test.valideted != 'refused'">
+                    <t t-if="test.validated != 'accepted' and test.validated != 'refused'">
                         <td class="testing" t-att-data-test-id="test.id">
                             <button href="#" class="btn btn-success accepted_test">
                                 <i class="fa fa-check"/>

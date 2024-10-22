@@ -28,8 +28,8 @@ class Task(models.Model):
 
             if stage.testing_stage:
                 for test in self.test_ids:
-                    if test.valideted == False :
-                        test.valideted = 'intest'
+                    if test.validated == False :
+                        test.validated = 'intest'
 
         if self.stage_id.name == "En cours" or ('stage_id' in values and stage.name == "En cours"):
             if 'user_ids' in values:

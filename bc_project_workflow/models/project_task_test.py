@@ -12,7 +12,7 @@ class TaskTest (models.Model):
 
     validated_date = fields.Datetime(store=True)
 
-    valideted = fields.Selection(
+    validated = fields.Selection(
         
         selection=[('accepted', 'Accepted'), ('refused', 'Refused'),('intest', 'In Test')],
         help = ""
@@ -35,19 +35,19 @@ class TaskTest (models.Model):
     def create(self, values):
         task = self.env['project.task'].browse(values['task_id'])
         if task.stage_id.testing_stage:
-            values['valideted'] = 'intest'
+            values['validated'] = 'intest'
 
         return super(TaskTest, self).create(values)
 
     def accepted(self):
         for record in self.sudo():
-            record.valideted = 'accepted'
+            record.validated = 'accepted'
             record.validated_date = datetime.now()
             record.customer = self.env.user.name
     
     def refused(self, justify):
         for record in self.sudo():
-            record.valideted = 'refused'
+            record.validated = 'refused'
             record.refused_justify = justify
 
             record.customer = self.env.user.name
