@@ -12,8 +12,7 @@
                         <tree>
                             <field name="name"/>
                         </tree>
-                    </field> 
-                                                
+                    </field>                            
                 </tree>
         </field>
     </record>
@@ -28,6 +27,8 @@
                         <field name="create_date" readonly="1"/>
                         <field name="task_id"/>
                         <field name="validated"/>
+                        <field name="parent_id" readonly="1" invisible="parent_id == False"/>
+                        <field name="childtest_count" invisible="childtest_count == 0" readonly="1" />
                     </group>
                     <notebook>
                         <page string="Test procedure">                              
@@ -35,6 +36,21 @@
                         </page>
                         <page string="Refused Justify" invisible="validated != 'refused'">                              
                             <field name="refused_justify" readonly="1"/>                                
+                        </page>
+                        <page string="Child Test" invisible="childtest_count == 0">                              
+                            <field name="child_ids">
+                                <tree string="Child Test" decoration-success="validated == 'accepted'" decoration-danger="validated == 'refused'">
+                                    <field name="create_date"/>
+                                    <field name="validated_date" readonly="1"/>
+                                    <field name="customer" readonly="1"/>                            
+                                    <field name="name"/>                            
+                                    <field name="description"/>                            
+                                    <field name="validated"/>
+                                    <button class="fa fa-gears"
+                                    name="button_test_modal"
+                                    type="object"/>
+                                </tree>
+                            </field>                                
                         </page>
                     </notebook>
                 </sheet>
