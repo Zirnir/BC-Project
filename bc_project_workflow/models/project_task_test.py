@@ -28,6 +28,8 @@ class TaskTest (models.Model):
     child_ids = fields.One2many('project.task.test', 'parent_id', string="Child-Test")
     childtest_count = fields.Integer("Child Test", default=0)
 
+    tags = fields.Many2many("test.tag", string="Justify Tag")
+
     @api.depends('description')
     def _compute_summary(self):
         for record in self:
@@ -70,11 +72,13 @@ class TaskTest (models.Model):
             record.validated_date = datetime.now()
             record.customer = self.env.user.name
     
-    def refused(self, justify):
+    def refused(self, justify, tag_id):
         for record in self.sudo():
             record.validated = 'refused'
             record.refused_justify = justify
             record.validated_date = datetime.now()
+
+            record.tags = [(6, 0, [tag_id])]
 
             record.customer = self.env.user.name
 

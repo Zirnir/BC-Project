@@ -3,12 +3,13 @@
 
 {
     'name': 'BC_Project_Workflow',
-    'depends': ['project'],
+    'depends': ['project', 'website'],
     'data': [
         'security/ir.model.access.csv',
 
         'views/project_task_test_views.xml',
         'views/project_task_type_views.xml',
+        'views/project_task_test_tag_views.xml',
         'views/project_task_portal_templates.xml',
         'views/project_task_views.xml',
         'views/project_task_test_portal_template.xml',

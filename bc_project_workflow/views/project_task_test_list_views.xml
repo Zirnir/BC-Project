@@ -34,7 +34,8 @@
                         <page string="Test procedure">                              
                             <field name="description"/>                                
                         </page>
-                        <page string="Refused Justify" invisible="validated != 'refused'">                              
+                        <page string="Refused Justify" invisible="validated != 'refused'">
+                            <field name="tags" widget="many2many_tags" readonly="1"/>                                
                             <field name="refused_justify" readonly="1"/>                                
                         </page>
                         <page string="Child Test" invisible="childtest_count == 0">                              

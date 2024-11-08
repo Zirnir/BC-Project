@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="tag_action" model="ir.actions.act_window">
+        <field name="name">Tag</field>
+        <field name="res_model">test.tag</field>
+        <field name="view_mode">tree,form</field>
+    </record>  
+</odoo>

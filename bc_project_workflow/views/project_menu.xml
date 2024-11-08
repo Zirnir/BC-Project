@@ -3,8 +3,21 @@
     <menuitem
             name="Test"
             id="menu_test"
-            action="test_action"
             parent="project.menu_main_pm"
             sequence="1">
+    </menuitem>
+    <menuitem
+            name="Test"
+            id="test_menu"
+            action="test_action"
+            parent="bc_project_workflow.menu_test"
+            sequence="10">
+    </menuitem>
+    <menuitem
+            name="Tag"
+            id="tag_menu"
+            action="tag_action"
+            parent="bc_project_workflow.menu_test"
+            sequence="20">
     </menuitem>
 </odoo>

@@ -23,12 +23,12 @@
                                     <form method="POST" class="modal-content js_website_description_form description_form">
                                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                         <input type="hidden" name="test_id" t-att-value="test.id"/>
-
+                                        
                                         <header class="modal-header">
                                             <h4 class="modal-title">Consigne du Test</h4>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </header>
-
+                                        
                                         <main class="modal-body">
                                             <div class="mb-3">
                                                 <div class="form-control" >
@@ -42,38 +42,8 @@
                         </td>
                     </t>
                     <t t-if="test.validated != 'accepted' and test.validated != 'refused'">
-                        <td class="testing" t-att-data-test-id="test.id">
-                            <button href="#" class="btn btn-success accepted_test">
-                                <i class="fa fa-check"/>
-                            </button>
-                            <button href="#" class="btn btn-danger refused_test">
-                                <i class="fa fa-times"/>
-                            </button>
-                            <div class="modal fade modal_test_justify_refused" tabindex="-1" role="dialog">
-                                <div class="modal-dialog">
-                                    <form method="POST" class="modal-content js_website_submit_form refused_partner_assign_form">
-                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                                        <input type="hidden" name="test_id" t-att-value="test.id"/>
-
-                                        <header class="modal-header">
-                                            <h4 class="modal-title">Refused Test Feedback</h4>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </header>
-
-                                        <main class="modal-body">
-                                            <div class="mb-3">
-                                                <label for="comment_refused" class="col-form-label">Why are you refusing this test?</label>
-                                                <textarea name="comment" id="comment_refused" class="form-control"></textarea>
-                                            </div>
-                                        </main>
-
-                                        <footer class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                            <button type="submit" class="btn btn-danger">Submit Refused</button>
-                                        </footer>
-                                    </form>
-                                </div>
-                            </div>
+                        <td>
+                            <owl-component name="submit_modal.SubmitModal" t-att-props="json.dumps({'test_id':test.id})"/>
                         </td>
                     </t>
                 </t>
