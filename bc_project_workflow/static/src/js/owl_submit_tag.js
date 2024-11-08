@@ -11,7 +11,6 @@ export class SubmitModal extends Component {
     static props = { test_id:Number};
 
     setup() {
-        console.log("ok", this.props.test_id);
         this.orm = useService('orm');
         this.tags = [];
         this.state = useState({
@@ -31,7 +30,6 @@ export class SubmitModal extends Component {
 
     showModal() {
         this.state.isModalVisible = true;
-        console.log(this.state.isModalVisible);
     }
 
     closeModal() {
@@ -42,14 +40,12 @@ export class SubmitModal extends Component {
         this.tags = await this.orm.call('test.tag', 'search_read', [], {
             fields: ['id' , 'name'],
         });
-        console.log(this.tags);
     }
 
     async accepted(){
         return this.orm.call("project.task.test", "accepted", [this.props.test_id]).then(() => {
             this.closeModal();
             this.hideButton();
-            console.log("azerty");
         });
     }
     
