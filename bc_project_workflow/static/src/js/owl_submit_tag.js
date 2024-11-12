@@ -22,6 +22,7 @@ export class SubmitModal extends Component {
             isInvalidTag: false,
             file: null,
         });
+        console.log("ok")
 
         onWillStart(() => this.tagCollector());
         
