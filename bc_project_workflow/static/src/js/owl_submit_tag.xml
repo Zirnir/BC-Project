@@ -1,7 +1,7 @@
 <template xml:space="preserve">
     <t t-name="submit_modal.SubmitModal">
         <t t-if="state.isButtonVisible">
-            <div style="display: flex; justify-content: space-evenly;">
+            <div style="display: flex; justify-content: center; gap: 4px;">
                 <button class="btn btn-success accepted_test" t-on-click="accepted">
                     <i class="fa fa-check"/>
                 </button>

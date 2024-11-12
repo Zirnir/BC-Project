@@ -22,7 +22,6 @@ export class SubmitModal extends Component {
             isInvalidTag: false,
             file: null,
         });
-        console.log("ok")
 
         onWillStart(() => this.tagCollector());
         
@@ -31,16 +30,14 @@ export class SubmitModal extends Component {
     handleFileChange(ev) {
         const file = ev.target.files[0];  
         if (file) {
-            const reader = new FileReader(); // Crée un lecteur de fichier
+            const reader = new FileReader(); 
 
             reader.onloadend = () => {
-                const fileAsBase64 = reader.result.split(',')[1]; // Récupère la partie base64
-
-                // Sauvegarde le fichier sous forme de base64 dans l'état
+                const fileAsBase64 = reader.result.split(',')[1]; 
+                
                 this.state.file = fileAsBase64;
             };
 
-            // Lis le fichier comme Data URL (base64)
             reader.readAsDataURL(file);
         }
     }
@@ -81,7 +78,7 @@ export class SubmitModal extends Component {
                 this.hideButton();
             });
         }
-        if (!justify || !tag_id) {
+        if (!justify || tag_id == '') {
 
             if (!justify){
                 this.state.isInvalidJustify = true;
