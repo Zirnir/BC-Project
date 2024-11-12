@@ -1,12 +1,14 @@
 <template xml:space="preserve">
     <t t-name="submit_modal.SubmitModal">
         <t t-if="state.isButtonVisible">
-            <button class="btn btn-success accepted_test" t-on-click="accepted">
-                <i class="fa fa-check"/>
-            </button>
-            <button class="btn btn-danger refused_test" t-on-click="showModal">
-                <i class="fa fa-times"></i>
-            </button>
+            <div style="display: flex; justify-content: space-evenly;">
+                <button class="btn btn-success accepted_test" t-on-click="accepted">
+                    <i class="fa fa-check"/>
+                </button>
+                <button class="btn btn-danger refused_test" t-on-click="showModal">
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
             
             <t t-if="state.isModalVisible">
                 <div class="modal fade show" style="display: block;" role="dialog" tabindex="-1" id="justify_test_modal">
@@ -20,8 +22,8 @@
                                 <div class="mb-3">
                                     <t t-set="test" t-value="getTags" />
                                     <label for="tag_selection" class="col-form-label">Tags</label>
-                                    <select id="tag_selection" t-model="state.selectedTags" class="form-control">
-                                        <option>
+                                    <select id="tag_selection" t-model="state.selectedTags" t-att-class="{ 'form-control': true, 'is-invalid': state.isInvalidTag }">
+                                        <option value="">
                                             --- Select tag ---
                                         </option>
                                         <t t-foreach="tags" t-as="tag" t-key="tag.id">
@@ -30,10 +32,21 @@
                                             </option>
                                         </t>
                                     </select>
+                                    <div class="invalid-feedback">
+                                        Please choose a tag.
+                                    </div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="reason">Why?</label>
-                                    <textarea id="reason" t-model="state.justify" class="form-control"></textarea>
+                                    <textarea id="reason" t-model="state.justify" t-att-class="{ 'form-control': true, 'is-invalid': state.isInvalidJustify }"></textarea>
+                                    <div class="invalid-feedback">
+                                        Please justify.
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="file">Upload a file</label>
+                                    <br/>
+                                    <input class="file" id="attachments" type="file" name="attachments" t-on-change="handleFileChange"/>
                                 </div>
                             </div>
                             <div class="modal-footer">

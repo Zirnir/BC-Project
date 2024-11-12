@@ -46,6 +46,20 @@
                             <owl-component name="submit_modal.SubmitModal" t-att-props="json.dumps({'test_id':test.id})"/>
                         </td>
                     </t>
+                    <t t-if="test.validated == 'accepted'">
+                        <td>
+                            <div style="display: flex; justify-content: center; color:green;">
+                                <h6>Accepted</h6>
+                            </div>
+                        </td>
+                    </t>
+                    <t t-if="test.validated == 'refused'">
+                        <td>
+                            <div style="display: flex; justify-content: center; color:red;">
+                                <h6>Refused</h6>
+                            </div>
+                        </td>
+                    </t>
                 </t>
             </tr>
         </table>
