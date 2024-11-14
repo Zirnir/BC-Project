@@ -31,6 +31,7 @@ class TaskTest (models.Model):
     tags = fields.Many2many("test.tag", string="Justify Tag")
 
     files = fields.Binary(string="Upload File", attachment=True)
+    file_name = fields.Text()
 
     @api.depends('description')
     def _compute_summary(self):
@@ -74,11 +75,12 @@ class TaskTest (models.Model):
             record.validated_date = datetime.now()
             record.customer = self.env.user.name
     
-    def refused(self, justify, tag_id, file):
+    def refused(self, justify, tag_id, file, file_name):
         for record in self.sudo():
             record.validated = 'refused'
             record.refused_justify = justify
             record.files = file
+            record.file_name = file_name
             record.validated_date = datetime.now()
 
             record.tags = [(6, 0, [tag_id])]

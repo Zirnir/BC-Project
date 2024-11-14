@@ -37,7 +37,9 @@
                         <page string="Refused Justify" invisible="validated != 'refused'">
                             <field name="tags" widget="many2many_tags" readonly="1"/>                                
                             <field name="refused_justify" readonly="1"/> 
-                            <field name="files" readonly="1"/>                               
+                            <field name="files" filename="file_name" readonly="1"/>
+                            <field name="file_name" invisible="1"/>
+
                         </page>
                         <page string="Child Test" invisible="childtest_count == 0">                              
                             <field name="child_ids">

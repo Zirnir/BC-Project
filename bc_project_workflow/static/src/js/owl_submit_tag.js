@@ -21,6 +21,7 @@ export class SubmitModal extends Component {
             isInvalidJustify: false,
             isInvalidTag: false,
             file: null,
+            file_name:'',
         });
 
         onWillStart(() => this.tagCollector());
@@ -28,7 +29,8 @@ export class SubmitModal extends Component {
     }
 
     handleFileChange(ev) {
-        const file = ev.target.files[0];  
+        const file = ev.target.files[0];
+        this.state.file_name = file.name;
         if (file) {
             const reader = new FileReader(); 
 
@@ -71,9 +73,9 @@ export class SubmitModal extends Component {
         const tag_id = this.state.selectedTags;
         const justify = this.state.justify;
         const test_id = this.props.test_id;
-        console.log(this.state.file)
+        const file_name = this.state.file_name;
         if (justify && tag_id) {
-            return this.orm.call("project.task.test", "refused", [test_id,justify,tag_id,this.state.file]).then(() => {
+            return this.orm.call("project.task.test", "refused", [test_id,justify,tag_id,this.state.file,file_name]).then(() => {
                 this.closeModal();
                 this.hideButton();
             });
