@@ -13,7 +13,7 @@
                             <field name="validated_date" readonly="1"/>
                             <field name="customer" readonly="1"/>                            
                             <field name="name"/>                            
-                            <field name="description"/>                            
+                            <field name="summary"/>                            
                             <field name="validated"/>
                             <button class="fa fa-gears"
                             name="button_test_modal"

@@ -1,5 +1,6 @@
 from odoo import fields, models, api, _
 from datetime import datetime
+import re
 
 class TaskTest (models.Model):
     _name = "project.task.test"
@@ -37,7 +38,8 @@ class TaskTest (models.Model):
     def _compute_summary(self):
         for record in self:
             if record.description:
-                record.summary = record.description[:40]
+                text = record.description[:40]
+                record.summary = re.sub('<[^<]+?>', '', text)
             else:
                 record.summary = ""
 

@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="portal_testing_table" name="Portal Testing Table">
+        <style>
+            .responsive{
+                @media (max-width: 767px) {
+                    .modal-dialog {
+                        max-width: 100%;
+                    }
+                }
+            }
+        </style>
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -19,7 +28,7 @@
                                 <t t-esc="test.summary"/>
                             </a>
                             <div class="modal fade" t-att-id="'modal_test_description_' + str(test.id)" tabindex="-1" role="dialog">
-                                <div class="modal-dialog">
+                                <div class="modal-dialog responsive">
                                     <form method="POST" class="modal-content js_website_description_form description_form">
                                         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                         <input type="hidden" name="test_id" t-att-value="test.id"/>
@@ -43,7 +52,9 @@
                     </t>
                     <td>
                         <t t-if="test.validated != 'accepted' and test.validated != 'refused'">
-                            <owl-component name="submit_modal.SubmitModal" t-att-props="json.dumps({'test_id':test.id})"/>
+                            <div class="responsive">
+                                <owl-component name="submit_modal.SubmitModal" t-att-props="json.dumps({'test_id':test.id})"/>
+                            </div>
                         </t>
                         <t t-if="test.validated == 'accepted'">
                             <div style="display: flex; justify-content: center; color:green">
