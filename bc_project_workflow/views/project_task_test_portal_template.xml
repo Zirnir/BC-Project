@@ -43,6 +43,11 @@
                                                 <div class="form-control" >
                                                     <t t-esc="test.description" />
                                                 </div>
+                                                <div class="mb-3" >
+                                                    <button data-bs-dismiss="bc_project_workflow.report_procedure_test" type="action" class="btn btn-primary">
+                                                        Print Procedure
+                                                    </button>
+                                                </div>
                                             </div>
                                         </main>
                                     </form>

@@ -1,7 +1,6 @@
 from odoo import fields, models, api, _
 from datetime import datetime
 import re
-
 class TaskTest (models.Model):
     _name = "project.task.test"
     _description = "Test of task"
@@ -100,7 +99,7 @@ class TaskTest (models.Model):
                 message_type='notification',
                 partner_ids=self.task_id.user_ids.ids,
             )
-
+            
     def button_test_modal(self):
         return {
             "name": _("Test modal"),
