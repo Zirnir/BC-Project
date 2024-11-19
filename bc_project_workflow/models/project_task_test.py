@@ -1,6 +1,7 @@
 from odoo import fields, models, api, _
 from datetime import datetime
 import re
+import base64
 class TaskTest (models.Model):
     _name = "project.task.test"
     _description = "Test of task"
@@ -9,7 +10,7 @@ class TaskTest (models.Model):
     name = fields.Char()
 
     description = fields.Html(sanitize_attributes=False)
-    summary = fields.Html(compute = "_compute_summary" ,sanitize_attributes=False)
+    summary = fields.Html(compute="_compute_summary", sanitize_attributes=False)
 
     validated_date = fields.Datetime(store=True)
 
@@ -32,6 +33,12 @@ class TaskTest (models.Model):
 
     files = fields.Binary(string="Upload File", attachment=True)
     file_name = fields.Text()
+
+    html_file = fields.Binary(string="Upload HTML Template")
+
+    is_template = fields.Boolean()
+
+    template_id = fields.Many2one('project.task.test', string="Template", domain="[('is_template', '=', True)]")
 
     @api.depends('description')
     def _compute_summary(self):
@@ -113,5 +120,19 @@ class TaskTest (models.Model):
                 "default_test_id": self.id,
             },
         }
+    @api.onchange('html_file')
+    def _onchange_generate_procedure_template(self):
+        
+        if self.html_file:
+            html_content = base64.b64decode(self.html_file).decode('utf-8')
+            self.description = html_content
+            self.html_file = ''
+                
+        else:
+            self.description = "<p>No file uploaded.</p>"
+    @api.onchange('template_id')
+    def _onchange_template(self):
+        self.description = self.template_id.description
+        self.template_id = ''
 
             

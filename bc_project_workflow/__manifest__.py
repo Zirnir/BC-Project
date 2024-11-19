@@ -14,6 +14,7 @@
         'views/project_task_views.xml',
         'views/project_task_test_portal_template.xml',
         'views/project_task_test_list_views.xml',
+        'views/project_task_test_template_views.xml',
         'views/project_menu.xml',
     ],
     'assets': {

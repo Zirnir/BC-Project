@@ -34,7 +34,12 @@
                                         <input type="hidden" name="test_id" t-att-value="test.id"/>
                                         
                                         <header class="modal-header">
-                                            <h4 class="modal-title">Consigne du Test</h4>
+                                            <div style="display: flex; align-items: center; gap: 10px; width: 40%;">
+                                                <h4 class="modal-title">Consigne du Test</h4>
+                                                <a type="btn btn" t-att-href="'/report/pdf/bc_project_workflow.report_procedure_test/'+ str(test.id)">
+                                                    <i class="fa fa-download"/>
+                                                </a>
+                                            </div>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </header>
                                         
@@ -44,9 +49,6 @@
                                                     <t t-esc="test.description" />
                                                 </div>
                                                 <div class="mb-3" >
-                                                    <button data-bs-dismiss="bc_project_workflow.report_procedure_test" type="action" class="btn btn-primary">
-                                                        Print Procedure
-                                                    </button>
                                                 </div>
                                             </div>
                                         </main>

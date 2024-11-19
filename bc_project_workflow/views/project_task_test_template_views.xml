@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_test_template_tree" model="ir.ui.view">
+        <field name="name">project.task.test.template.tree</field>
+        <field name="model">project.task.test</field>
+        <field name="arch" type="xml">
+            <tree string="Test">                          
+                <field name="name"/>                           
+                <field name="summary"/>                           
+            </tree>
+        </field>
+    </record>
+    
+    <record id="test_template" model="ir.actions.act_window">
+        <field name="name">Test Template</field>
+        <field name="res_model">project.task.test</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('is_template', '=', True)]</field>
+        <field name="view_id" ref="view_test_template_tree"/>
+    </record>
+</odoo>

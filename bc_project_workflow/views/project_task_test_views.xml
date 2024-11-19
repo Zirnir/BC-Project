@@ -4,5 +4,6 @@
         <field name="name">Test</field>
         <field name="res_model">project.task.test</field>
         <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_test_tree"/>
     </record>  
 </odoo>

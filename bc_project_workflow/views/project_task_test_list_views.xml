@@ -14,28 +14,46 @@
                     <style>
                         body {
                             font-family: 'Arial', sans-serif;
-                            font-size: 16px;
+                            font-size: 18px;
                         }
                     </style>
                     <t t-foreach="docs" t-as="doc">
                         <div class="page">
-                        <div class="report-container">
-                            <header>
-                                <h2>Procedure Test Report</h2>
-                            </header>
-                            
-                            <section class="report-body">
-                                <p><strong>Name:</strong> <t t-esc="doc.name"/></p>
-                                    <p>Read by <t t-esc="doc.create_uid.name"/></p>
-                                    <p><strong>Description:</strong> 
-                                        <t t-if="doc.description">
-                                            <t t-out="doc.description"/>
-                                        </t>
-                                    </p>
-                            </section>
+                            <div class="report-container">
+                                <div style="display: flex; justify-content: space-between; height:80px; ">
+                                    <div><strong>Test:</strong> <t t-esc="doc.name"/></div>
+                                    <div><t t-esc="doc.write_date.strftime('%d-%m-%Y')"/></div>
+                                </div>
+                                <header style="display: flex; justify-content: center;">
+                                    <h1 class="title">Procedure Test Report</h1>
+                                </header>
+                                <hr/>
+                                <section class="body">
+                                    <br/>
+                                    <div>
+                                        <div style="display: flex; justify-content: space-between; height:60px; ">
+                                            <p><strong>Project:</strong> <t t-esc="doc.task_id.project_id.name"/></p>
+                                            <p><strong>Task:</strong> <t t-esc="doc.task_id.name"/></p>
+                                        </div>
+                                        <p><h2>Procedure:</h2> 
+                                            <t t-if="doc.description">
+                                                <t t-out="doc.description"/>
+                                            </t>
+                                            <t t-if="not doc.description">
+                                                <h4>This test doesn't have a procedure.</h4>
+                                            </t>
+                                        </p>
+                                    </div>
+                                    <br/>
+                                    <hr/>
+                                    <br/>
+                                    <div>
+                                        <p style="display: flex; justify-content: center;">Created by <t t-esc="doc.create_uid.name"/></p>
+                                    </div>
+                                </section>
+                            </div>
                         </div>
-                    </div>
-                </t>
+                    </t>
                 </t>
             </t>
         </t>
@@ -66,6 +84,8 @@
                 <sheet>
                     <group>
                         <field name="name"/>
+                        <field name="is_template"/>
+                        <field name="template_id"/>
                         <field name="create_date" readonly="1"/>
                         <field name="task_id"/>
                         <field name="validated"/>
@@ -74,7 +94,8 @@
                         <button name="bc_project_workflow.report_procedure_test" string="Generate Report" type="action" class="btn-primary"/>
                     </group>
                     <notebook>
-                        <page string="Test procedure">               
+                        <page string="Test procedure">  
+                            <field name="html_file" string="Upload HTML Template" widget="binary"/>             
                             <field name="description"/>
                         </page>
                         <page string="Refused Justify" invisible="validated != 'refused'">
