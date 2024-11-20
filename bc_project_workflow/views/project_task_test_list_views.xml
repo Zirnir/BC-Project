@@ -1,17 +1,91 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record id="report_procedure_test" model="ir.actions.report">
+        <field name="name">Procedure Test Report</field>
+        <field name="model">project.task.test</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">bc_project_workflow.report_procedure_test_template</field>
+    </record>
+    
+    <template id="report_procedure_test_template">
+        <t t-name="bc_project_workflow.report_procedure_test_template">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <style>
+                        body {
+                            font-family: 'Arial', sans-serif;
+                            font-size: 18px;
+                        }
+                    </style>
+                    <t t-foreach="docs" t-as="doc">
+                        <div class="page">
+                            <div class="report-container">
+                                <div style="display: flex; justify-content: space-between; height:80px; ">
+                                    <div><strong>Test:</strong> <t t-esc="doc.name"/></div>
+                                    <div><t t-esc="doc.write_date.strftime('%d-%m-%Y')"/></div>
+                                </div>
+                                <header style="display: flex; justify-content: center;">
+                                    <h1 class="title">Procedure Test Report</h1>
+                                </header>
+                                <hr/>
+                                <section class="body">
+                                    <br/>
+                                    <div>
+                                        <div style="display: flex; justify-content: space-between; height:60px; ">
+                                            <p><strong>Project:</strong> <t t-esc="doc.task_id.project_id.name"/></p>
+                                            <p><strong>Task:</strong> <t t-esc="doc.task_id.name"/></p>
+                                        </div>
+                                        <p><h2>Procedure:</h2> 
+                                            <t t-if="doc.description">
+                                                <t t-out="doc.description"/>
+                                            </t>
+                                            <t t-if="not doc.description">
+                                                <h4>This test doesn't have a procedure.</h4>
+                                            </t>
+                                        </p>
+                                    </div>
+                                    <br/>
+                                    <hr/>
+                                    <br/>
+                                    <div>
+                                        <p style="display: flex; justify-content: center;">Created by <t t-esc="doc.create_uid.name"/></p>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="report_print_procedure" model="ir.actions.server">
+        <field name="name">Print Procedure</field>
+        <field name="model_id" ref="model_project_task_test"/>
+        <field name="binding_model_id" ref="model_project_task_test"/>
+        <field name="state">code</field>
+        <field name="code">
+            action=record.print_report()
+        </field>
+    </record>
+
     <record id="view_test_tree" model="ir.ui.view">
         <field name="name">project.task.test.tree</field>
         <field name="model">project.task.test</field>
         <field name="arch" type="xml">
-                <tree string="Test">
-                    <field name="create_date"/>                            
-                    <field name="name"/>                            
-                    <field name="description"/>                            
-                    <field name="valideted"/>                            
-                </tree>
+            <tree string="Test" decoration-success="validated == 'accepted'" decoration-danger="validated == 'refused'">
+                <field name="create_date" readonly="1"/>                            
+                <field name="name"/>                          
+                <field name="validated" readonly="1"/>
+                <field name="task_id" widget="many2one">
+                    <tree>
+                        <field name="name"/>
+                    </tree>
+                </field>                            
+            </tree>
         </field>
     </record>
+
     <record id="views_test_form" model="ir.ui.view">
         <field name="name">project.task.test.form</field>
         <field name="model">project.task.test</field>
@@ -20,16 +94,39 @@
                 <sheet>
                     <group>
                         <field name="name"/>
-                        <field name="create_date"/>
+                        <field name="is_template"/>
+                        <field name="template_id"/>
+                        <field name="create_date" readonly="1"/>
                         <field name="task_id"/>
-                        <field name="valideted"/>
+                        <field name="validated"/>
+                        <field name="parent_id" readonly="1" invisible="parent_id == False"/>
+                        <field name="childtest_count" invisible="childtest_count == 0" readonly="1" />
                     </group>
                     <notebook>
-                        <page string="Info">                              
-                            <field name="description"/>                                
+                        <page string="Test procedure">  
+                            <field name="html_file" string="Upload HTML Template" widget="binary"/>             
+                            <field name="description"/>
                         </page>
-                        <page string="Refused Justify" invisible="valideted != 'refused'">                              
-                            <field name="refused_justify"/>                                
+                        <page string="Refused Justify" invisible="validated != 'refused'">
+                            <field name="tags" widget="many2many_tags" readonly="1"/>
+                            <field name="refused_justify" readonly="1"/> 
+                            <field name="files" filename="file_name" readonly="1"/>
+                            <field name="file_name" invisible="1"/>
+                        </page>
+                        <page string="Child Test" invisible="childtest_count == 0">                              
+                            <field name="child_ids">
+                                <tree string="Child Test" decoration-success="validated == 'accepted'" decoration-danger="validated == 'refused'">
+                                    <field name="create_date"/>
+                                    <field name="validated_date" readonly="1"/>
+                                    <field name="customer" readonly="1"/>                            
+                                    <field name="name"/>                            
+                                    <field name="description"/>                            
+                                    <field name="validated"/>
+                                    <button class="fa fa-gears"
+                                    name="button_test_modal"
+                                    type="object"/>
+                                </tree>
+                            </field>                                
                         </page>
                     </notebook>
                 </sheet>

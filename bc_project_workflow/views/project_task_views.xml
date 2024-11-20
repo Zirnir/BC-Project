@@ -8,11 +8,16 @@
             <notebook position="inside">
                 <page name="testing_page" string="Testing">
                     <field name="test_ids">
-                        <tree string="Test" widget="one2many" decoration-success="valideted == 'accepted'" decoration-danger="valideted == 'refused'" editable="bottom">
-                            <field name="create_date"/>                            
+                        <tree string="Test" widget="one2many" decoration-success="validated == 'accepted'" decoration-danger="validated == 'refused'" editable="bottom">
+                            <field name="create_date"/>
+                            <field name="validated_date" readonly="1"/>
+                            <field name="customer" readonly="1"/>                            
                             <field name="name"/>                            
-                            <field name="description"/>                            
-                            <field name="valideted"/>                            
+                            <field name="summary"/>                            
+                            <field name="validated"/>
+                            <button class="fa fa-gears"
+                            name="button_test_modal"
+                            type="object"/>                      
                         </tree>
                     </field>
                 </page>

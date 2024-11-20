@@ -6,3 +6,4 @@ class Task(models.Model):
 
     in_progress_stage = fields.Boolean()
     testing_stage = fields.Boolean()
+    blocked_stage = fields.Boolean()

@@ -25,7 +25,12 @@ class Task(models.Model):
                     ])
                     if tasks_in_progress:
                         raise UserError(f"L'utilisateur {user.name} a déjà une tâche en cours.") 
-        
+
+            if stage.testing_stage:
+                for test in self.test_ids:
+                    if test.validated == False :
+                        test.validated = 'intest'
+
         if self.stage_id.name == "En cours" or ('stage_id' in values and stage.name == "En cours"):
             if 'user_ids' in values:
                 user_ids_operations = values.get('user_ids', [])

@@ -8,6 +8,7 @@
             <xpath expr="//field[@name='name']" position="after">
                 <field name="in_progress_stage"/>
                 <field name="testing_stage"/>
+                <field name="blocked_stage"/>
             </xpath>
     </field>
     </record>
