@@ -135,4 +135,13 @@ class TaskTest (models.Model):
         self.description = self.template_id.description
         self.template_id = ''
 
+    def print_report(self):
+            return {
+                'type': 'ir.actions.report',
+                'report_name': 'bc_project_workflow.report_procedure_test_template',  
+                'report_type': 'qweb-pdf',
+                'context': {'active_ids': [self.id]},
+            }
+
+
             
