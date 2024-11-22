@@ -1,0 +1,26 @@
+#print_button{
+    margin-top: 5px;
+
+}
+
+.responsive{
+    @media (max-width: 767px) {
+        .modal-dialog {
+            max-width: 100%;
+        }
+    }
+}
+
+.test_status{
+    display: flex; 
+    justify-content: center;
+
+    &.accepted {
+        color: green;
+    }
+    
+    &.refused {
+        color: red;
+    }
+
+}

@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="portal_testing_table" name="Portal Testing Table">
-        <style>
-            .responsive{
-                @media (max-width: 767px) {
-                    .modal-dialog {
-                        max-width: 100%;
-                    }
-                }
-            }
-        </style>
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -36,7 +27,7 @@
                                         <header class="modal-header">
                                             <div style="display: flex; align-items: center; gap: 10px; width: 40%;">
                                                 <h4 class="modal-title">Consigne du Test</h4>
-                                                <a type="btn btn" t-att-href="'/report/pdf/bc_project_workflow.report_procedure_test/'+ str(test.id)">
+                                                <a id="print_button" type="btn btn" t-att-href="'/report/pdf/bc_project_workflow.report_procedure_test/'+ str(test.id)">
                                                     <i class="fa fa-download"/>
                                                 </a>
                                             </div>
@@ -64,12 +55,12 @@
                             </div>
                         </t>
                         <t t-if="test.validated == 'accepted'">
-                            <div style="display: flex; justify-content: center; color:green">
+                            <div class="test_status accepted">
                                 <h6>Accepted</h6>
                             </div>
                         </t>
                         <t t-if="test.validated == 'refused'">
-                            <div style="display: flex; justify-content: center; color:red">
+                            <div class="test_status refused">
                                 <h6>Refused</h6>
                             </div>
                         </t>

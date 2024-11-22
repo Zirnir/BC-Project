@@ -12,45 +12,59 @@
             <t t-call="web.html_container">
                 <t t-call="web.external_layout">
                     <style>
-                        body {
+                        .body {
                             font-family: 'Arial', sans-serif;
                             font-size: 18px;
                         }
-                    </style>
+                        .flex_center {
+                            display: flex; 
+                            justify-content: center;
+                        }
+                        .flex_spacebetween_80px {
+                            display: flex; 
+                            justify-content: space-between; 
+                            height:80px;
+                        }
+                        
+                        hr {
+                            margin-top: 60px; 
+                            margin-bottom: 50px; 
+                        }
+                    </style> 
                     <t t-foreach="docs" t-as="doc">
                         <div class="page">
                             <div class="report-container">
-                                <div style="display: flex; justify-content: space-between; height:80px; ">
-                                    <div><strong>Test:</strong> <t t-esc="doc.name"/></div>
-                                    <div><t t-esc="doc.write_date.strftime('%d-%m-%Y')"/></div>
-                                </div>
-                                <header style="display: flex; justify-content: center;">
-                                    <h1 class="title">Procedure Test Report</h1>
+                                <header>
+                                    <div class="flex_spacebetween_80px">
+                                        <div><strong>Test:</strong> <t t-esc="doc.name"/></div>
+                                        <div><t t-esc="doc.write_date.strftime('%d-%m-%Y')"/></div>
+                                    </div>
+                                    <h1 class="title flex_center">Procedure Test Report</h1>
                                 </header>
                                 <hr/>
-                                <section class="body">
-                                    <br/>
-                                    <div>
-                                        <div style="display: flex; justify-content: space-between; height:60px; ">
-                                            <p><strong>Project:</strong> <t t-esc="doc.task_id.project_id.name"/></p>
-                                            <p><strong>Task:</strong> <t t-esc="doc.task_id.name"/></p>
+                                <body>
+                                    <section class="body">
+                                        <br/>
+                                        <div>
+                                            <div class="flex_spacebetween_80px">
+                                                <p><strong>Project:</strong> <t t-esc="doc.task_id.project_id.name"/></p>
+                                                <p><strong>Task:</strong> <t t-esc="doc.task_id.name"/></p>
+                                            </div>
+                                            <p><h2>Procedure:</h2> 
+                                                <t t-if="doc.description">
+                                                    <t t-out="doc.description"/>
+                                                </t>
+                                                <t t-if="not doc.description">
+                                                    <h4>This test doesn't have a procedure.</h4>
+                                                </t>
+                                            </p>
                                         </div>
-                                        <p><h2>Procedure:</h2> 
-                                            <t t-if="doc.description">
-                                                <t t-out="doc.description"/>
-                                            </t>
-                                            <t t-if="not doc.description">
-                                                <h4>This test doesn't have a procedure.</h4>
-                                            </t>
-                                        </p>
-                                    </div>
-                                    <br/>
-                                    <hr/>
-                                    <br/>
-                                    <div>
-                                        <p style="display: flex; justify-content: center;">Created by <t t-esc="doc.create_uid.name"/></p>
-                                    </div>
-                                </section>
+                                    </section>
+                                </body>
+                                <hr/>
+                                <footer>
+                                    <p class="flex_center">Created by <t t-esc="doc.create_uid.name"/></p>
+                                </footer>
                             </div>
                         </div>
                     </t>

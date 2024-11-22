@@ -2,7 +2,7 @@
 <odoo>
     <template id="portal_my_task" inherit_id="project.portal_my_task" name="Portal: My Task with Testing" priority="10">
         <xpath expr="//div[@id='card_body']" position="inside">
-            <t t-if="task.test_ids">
+            <t t-if="any(test.validated for test in task.test_ids)">
                 <div class="container test">
                     <h5>Testing</h5>
                     <t t-call="bc_project_workflow.portal_testing_table"/>
