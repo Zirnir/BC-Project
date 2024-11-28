@@ -27,8 +27,8 @@
                         }
                         
                         hr {
-                            margin-top: 60px; 
-                            margin-bottom: 50px; 
+                            margin-top: 40px; 
+                            margin-bottom: 40px; 
                         }
                     </style> 
                     <t t-foreach="docs" t-as="doc">
@@ -44,7 +44,6 @@
                                 <hr/>
                                 <body>
                                     <section class="body">
-                                        <br/>
                                         <div>
                                             <div class="flex_spacebetween_80px">
                                                 <p><strong>Project:</strong> <t t-esc="doc.task_id.project_id.name"/></p>
@@ -62,9 +61,7 @@
                                     </section>
                                 </body>
                                 <hr/>
-                                <footer>
-                                    <p class="flex_center">Created by <t t-esc="doc.create_uid.name"/></p>
-                                </footer>
+                                <p class="flex_center">Created by <t t-esc="doc.create_uid.name"/></p>
                             </div>
                         </div>
                     </t>

@@ -45,7 +45,7 @@ class TaskTest (models.Model):
         for record in self:
             if record.description:
                 text = record.description[:40]
-                record.summary = re.sub('<[^<]+?>', '', text)
+                record.summary = re.sub('<[^<]+?>\n', '', text)
             else:
                 record.summary = ""
 
@@ -82,6 +82,8 @@ class TaskTest (models.Model):
             record.validated = 'accepted'
             record.validated_date = datetime.now()
             record.customer = self.env.user.name
+            if record.parent_id:
+                record.parent_id.validated = 'accepted'
     
     def refused(self, justify, tag_id, file, file_name):
         for record in self.sudo():
@@ -134,6 +136,13 @@ class TaskTest (models.Model):
     def _onchange_template(self):
         self.description = self.template_id.description
         self.template_id = ''
+
+    @api.onchange('validated')
+    def _onchange(self):
+        if self.parent_id:
+            if self.validated == 'accepted':
+                self.parent_id.validated = 'accepted'
+        self.task_id.release_id.all_test_validated()
 
     def print_report(self):
             return {

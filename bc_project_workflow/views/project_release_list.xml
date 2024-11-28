@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="view_project_release_kaban" model="ir.ui.view">
+        <field name="name">project.release.kaban</field>
+        <field name="model">project.release</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <strong><field name="name"/></strong>
+                            <div><field name="project_id"/></div>
+                            <div><field name="state"/></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_project_release_tree" model="ir.ui.view">
+        <field name="name">project.release.tree</field>
+        <field name="model">project.release</field>
+        <field name="arch" type="xml">
+            <tree string="Release">                          
+                <field name="name"/>                   
+                <field name="state"/>                   
+                <field name="project_id" widget="many2one">
+                    <tree>
+                        <field name="name"/>
+                    </tree>
+                </field>                
+            </tree>
+        </field>
+    </record>
+    
+    <record id="views_release_form" model="ir.ui.view">
+        <field name="name">project.release.form</field>
+        <field name="model">project.release</field>
+        <field name="arch" type="xml">
+            <form string="Form release">
+                <header>
+                    <button class="btn btn-primary" name="released_button" type="object" invisible="is_ready_to_release == False or state == 'released'">Released</button>
+                    <button class="btn btn-primary" name="cancel_button" type="object" invisible="state != 'draft' and state != 'in_progress'">Cancel</button>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="state"/>
+                        <field name="project_id" widget="many2one">
+                            <tree>
+                                <field name="name"/>
+                            </tree>
+                        </field>
+                        <field name="is_ready_to_release" readonly="1"/>
+                        <field name="release_date" invisible="state != 'released'" readonly="1"/>
+                    </group>
+                        <notebook>
+                            <page string="Release instruction">  
+                                <field name="update_instruction"/>
+                            </page>
+                            <page string="Task in release">  
+                                <field name="task_ids" widget="one2many" readonly="1">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="stage_id"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+</odoo>

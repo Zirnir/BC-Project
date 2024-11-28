@@ -21,6 +21,9 @@
                         </tree>
                     </field>
                 </page>
+                <page name="release_page" string="Release instruction">
+                    <field name="update_instruction"/>
+                </page>
             </notebook>
         </field>
     </record>
