@@ -33,57 +33,32 @@ class Task(models.Model):
                 for test in self.test_ids:
                     if test.validated == False :
                         test.validated = 'intest'
-                import pdb;pdb.set_trace()
                 in_progress_releases = self.project_id.release_ids.filtered(lambda r: r.state == 'in_progress')
+                # instruction_template = f"<p><h3><strong>{self.name}:</strong></h3><br/>{self.update_instruction}</p>"
                 if in_progress_releases:
                     release = in_progress_releases[0]
                     self.release_id = release.id
-                    instruction = (release.update_instruction or '') + self.name + self.update_instruction
-                    release.update_instruction = instruction
+                    # instruction = (release.update_instruction or '') + instruction_template
+                    # release.update_instruction = instruction
                 else: 
                     draft_releases = self.project_id.release_ids.filtered(lambda r: r.state == 'draft')
                     if draft_releases:
                         release = draft_releases[0]
                         self.release_id = release.id 
                         release.state = 'in_progress'
-                        instruction = (release.update_instruction or '') + self.name + self.update_instruction
-                        release.update_instruction = instruction
+                        # instruction = (release.update_instruction or '') + self.name + self.update_instruction
+                        # release.update_instruction = instruction
                     else:
-                        instruction = self.name + self.update_instruction
+                        # instruction = self.name + self.update_instruction
                         release_data = {
                             'name': f"Release {len(self.project_id.release_ids) + 1}",
                             'project_id': self.project_id.id,
-                            'update_instruction': instruction,
+                            # 'update_instruction': instruction,
                             'state': 'in_progress',
                         }
                         new_release = self.env['project.release'].create(release_data)
                         self.release_id = new_release.id 
-                release.all_test_validated()
-
-                # count_release = 0
-                # for release in self.project_id.release_ids:
-                #     if release.state == 'in_progress':
-                #         self.release_id = release.id
-                #         if release.update_instruction:
-                #             instruction = release.update_instruction + self.name + self.update_instruction 
-                #         else:
-                #             instruction = self.name + self.update_instruction 
-                #         release.update_instruction = instruction
-                #     else:
-                #         count_release +=1
-                #     release.all_test_validated()
-                # if count_release == len(self.project_id.release_ids):
-                #     release = {
-                #         'name' : "Release" + str(len(self.project_id.release_ids) + 1),
-                #         'project_id' : self.project_id.id,
-                #         'update_instruction' : str(self.name + self.update_instruction),
-                #         'state' : 'in_progress',
-                #     }
-                #     self.env['project.release'].create(release)
-                #     for release in self.project_id.release_ids:
-                #         if release.state == 'in_progress':
-                #             self.release_id = release.id
-
+                
         if self.stage_id.name == "En cours" or ('stage_id' in values and stage.name == "En cours"):
             if 'user_ids' in values:
                 user_ids_operations = values.get('user_ids', [])

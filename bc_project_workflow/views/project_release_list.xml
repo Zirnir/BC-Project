@@ -23,7 +23,7 @@
         <field name="name">project.release.tree</field>
         <field name="model">project.release</field>
         <field name="arch" type="xml">
-            <tree string="Release">                          
+            <tree string="Release" default_group_by="state">                          
                 <field name="name"/>                   
                 <field name="state"/>                   
                 <field name="project_id" widget="many2one">
@@ -41,13 +41,16 @@
         <field name="arch" type="xml">
             <form string="Form release">
                 <header>
-                    <button class="btn btn-primary" name="released_button" type="object" invisible="is_ready_to_release == False or state == 'released'">Released</button>
+                    <button class="btn btn-primary" name="released_button" type="object" invisible="state != 'in_progress' or is_ready_to_release == True">Force Release</button>
+                    <button class="btn btn-primary" name="released_button" type="object" invisible="state != 'in_progress' or is_ready_to_release == False">Release</button>
                     <button class="btn btn-primary" name="cancel_button" type="object" invisible="state != 'draft' and state != 'in_progress'">Cancel</button>
+                    <button class="btn btn-primary" name="in_progress_button" type="object" invisible="state != 'draft'">In Progress</button>
+                    <button class="btn btn-primary" name="draft_button" type="object" invisible="state != 'cancel'">Draft</button>
+                    <field name="state"  widget="statusbar"/>
                 </header>
                 <sheet>
                     <group>
                         <field name="name"/>
-                        <field name="state"/>
                         <field name="project_id" widget="many2one">
                             <tree>
                                 <field name="name"/>
@@ -58,18 +61,22 @@
                     </group>
                         <notebook>
                             <page string="Release instruction">  
-                                <field name="update_instruction"/>
+                                <field name="update_instruction" widget="html"/>
                             </page>
                             <page string="Task in release">  
                                 <field name="task_ids" widget="one2many" readonly="1">
                                     <tree>
-                                        <field name="name"/>
-                                        <field name="stage_id"/>
+                                        <field name="name" readonly="1"/>
+                                        <field name="stage_id" readonly="1"/>
                                     </tree>
                                 </field>
                             </page>
                         </notebook>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
             </form>
         </field>
     </record>

@@ -34,7 +34,7 @@ class TaskTest (models.Model):
     files = fields.Binary(string="Upload File", attachment=True)
     file_name = fields.Text()
 
-    html_file = fields.Binary(string="Upload HTML Template")
+    html_file = fields.Binary(string="HTML Template")
 
     is_template = fields.Boolean()
 
@@ -142,7 +142,6 @@ class TaskTest (models.Model):
         if self.parent_id:
             if self.validated == 'accepted':
                 self.parent_id.validated = 'accepted'
-        self.task_id.release_id.all_test_validated()
 
     def print_report(self):
             return {
@@ -151,6 +150,3 @@ class TaskTest (models.Model):
                 'report_type': 'qweb-pdf',
                 'context': {'active_ids': [self.id]},
             }
-
-
-            
