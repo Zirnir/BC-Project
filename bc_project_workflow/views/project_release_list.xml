@@ -50,8 +50,8 @@
                 </header>
                 <sheet>
                     <group>
-                        <field name="name"/>
-                        <field name="project_id" widget="many2one">
+                        <field name="name" readonly="state != 'draft'"/>
+                        <field name="project_id" widget="many2one" readonly="state != 'draft'">
                             <tree>
                                 <field name="name"/>
                             </tree>
