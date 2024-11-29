@@ -82,3 +82,12 @@ class Task(models.Model):
                             raise UserError(f"L'utilisateur {user.name} a déjà une tâche en cours.")
 
         return super(Task, self).write(values)
+    
+    def action_get_test_record(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Task',
+            'view_mode': 'tree',
+            'res_model': 'project.task.test',
+            'domain': [('task_id', '=', self.id)]
+        }

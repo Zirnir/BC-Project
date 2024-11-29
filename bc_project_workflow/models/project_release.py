@@ -14,6 +14,7 @@ class ProjectRelaese(models.Model):
         selection=[('draft', 'Draft'), ('in_progress', 'In Progress'), ('released', 'Released'), ('cancel', 'Cancel')])
     project_id = fields.Many2one('project.project')
     task_ids = fields.One2many( 'project.task', 'release_id', tracking=True)
+    task_count = fields.Integer(string='Task', compute='_compute_task_count', default=0)
     is_ready_to_release = fields.Boolean(compute="_compute_is_ready_to_release")
     update_instruction = fields.Html(compute="_compute_update_instruction")
 
@@ -53,6 +54,11 @@ class ProjectRelaese(models.Model):
                         parent_count = 0
         else:
             self.is_ready_to_release = False
+    
+    def _compute_task_count(self):
+        for record in self:
+           record.task_count = len(record.task_ids)
+
 
     @api.onchange('state')
     def _onchange_state(self):
@@ -98,3 +104,12 @@ class ProjectRelaese(models.Model):
     def in_progress_button(self):
         self.state = 'in_progress'
         return True
+    
+    def action_get_task_record(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Task',
+            'view_mode': 'tree',
+            'res_model': 'project.task',
+            'domain': [('release_id', '=', self.id)]
+        }

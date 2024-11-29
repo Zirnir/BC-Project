@@ -5,6 +5,11 @@
         <field name="model">project.task</field>
         <field name="inherit_id" ref="project.view_task_form2"/>
         <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_button_box']" position="inside">
+                <button name="action_get_test_record" type="object" class="oe_stat_button" icon="fa-tasks" invisible="not test_ids">
+                    Tests
+                </button>
+            </xpath>
             <notebook position="inside">
                 <page name="testing_page" string="Testing">
                     <field name="test_ids">

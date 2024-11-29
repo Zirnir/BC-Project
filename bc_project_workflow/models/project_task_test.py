@@ -150,3 +150,12 @@ class TaskTest (models.Model):
                 'report_type': 'qweb-pdf',
                 'context': {'active_ids': [self.id]},
             }
+    
+    def action_get_child_record(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Child Tests',
+            'view_mode': 'tree',
+            'res_model': 'project.task.test',
+            'domain': [('parent_id', '=', self.id)]
+        }
