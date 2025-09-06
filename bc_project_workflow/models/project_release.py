@@ -36,6 +36,7 @@ class ProjectRelaese(models.Model):
     def _compute_is_ready_to_release(self):
         if self.task_ids:
             for record in self:
+                is_ready_to_release_count = 0
                 for task in record.task_ids:
                     parent_test = self.env['project.task.test'].search([
                         ('parent_id', '=', None),
@@ -47,11 +48,13 @@ class ProjectRelaese(models.Model):
                             parent_count +=1
 
                     if parent_count == len(parent_test):
-                        self.is_ready_to_release = True
+                        is_ready_to_release_count += 1
                         parent_count = 0
                     else:
                         self.is_ready_to_release = False
                         parent_count = 0
+                if is_ready_to_release_count == record.task_count:
+                    self.is_ready_to_release = True
         else:
             self.is_ready_to_release = False
     

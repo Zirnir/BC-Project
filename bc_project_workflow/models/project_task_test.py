@@ -23,7 +23,7 @@ class TaskTest (models.Model):
     refused_justify = fields.Html()
     customer = fields.Char()
 
-    task_id = fields.Many2one("project.task")
+    task_id = fields.Many2one("project.task") 
 
     parent_id = fields.Many2one('project.task.test', string='Parent Test')
     child_ids = fields.One2many('project.task.test', 'parent_id', string="Child-Test")
@@ -51,9 +51,10 @@ class TaskTest (models.Model):
 
     @api.model
     def create(self, values):
-        task = self.env['project.task'].browse(values['task_id'])
-        if task.stage_id.testing_stage:
-            values['validated'] = 'intest'
+        if self.task_id:
+            task = self.env['project.task'].browse(values['task_id'])
+            if task.stage_id.testing_stage:
+                values['validated'] = 'intest'
 
         return super(TaskTest, self).create(values)
 
@@ -97,7 +98,7 @@ class TaskTest (models.Model):
 
             record.customer = self.env.user.name
 
-            blocked_stage = self.env['project.task.type'].search([('blocked_stage', '=', True)])
+            blocked_stage = self.env['project.task.type'].search([('blocked_stage', '=', True),('project_ids', 'in', record.task_id.project_id.id)])
             record.task_id.stage_id = blocked_stage.id
 
             record.child_test_created()

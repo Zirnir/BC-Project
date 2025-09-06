@@ -7,7 +7,6 @@
     'data': [
         'security/ir.model.access.csv',
 
-        'views/project_task_test_views.xml',
         'views/project_release.xml',
         'views/project_task_type_views.xml',
         'views/project_task_test_tag_views.xml',
@@ -15,6 +14,7 @@
         'views/project_task_views.xml',
         'views/project_task_test_portal_template.xml',
         'views/project_task_test_list_views.xml',
+        'views/project_task_test_views.xml',
         'views/project_release_list.xml',
         'views/project_task_test_template_views.xml',
         'views/project_menu.xml',
@@ -25,4 +25,5 @@
         ],
     },
     'application': True,
+    'auto_install': True,
 }

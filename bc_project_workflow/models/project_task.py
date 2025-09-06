@@ -1,11 +1,11 @@
-from odoo import models, api, fields
+from odoo import models, api, fields #Importantion des packets Odoo.
 from odoo.exceptions import UserError
 
-class Task(models.Model):
-    _inherit = "project.task"
-
-
-    test_ids = fields.One2many("project.task.test", "task_id")
+class Task(models.Model): 
+    _inherit = "project.task" 
+                              
+    test_ids = fields.One2many("project.task.test", "task_id") 
+    
 
     release_id = fields.Many2one('project.release')
     update_instruction = fields.Html()
@@ -16,50 +16,43 @@ class Task(models.Model):
         return task
 
     def write(self, values):
-        if 'stage_id' in values:
+        if 'stage_id' in values: 
             stage = self.env['project.task.type'].browse(values['stage_id'])
 
-            if stage.name == "En cours":
-                for user in self.user_ids:
+            if stage.in_progress_stage: 
+                for user in self.user_ids: 
                     tasks_in_progress = self.env['project.task'].search([
                         ('user_ids', 'in', [user.id]),
-                        ('stage_id.name', '=', 'En cours'),
+                        ('stage_id.in_progress_stage', '=', True),
                         ('id', '!=', self.id)
                     ])
-                    if tasks_in_progress:
-                        raise UserError(f"L'utilisateur {user.name} a déjà une tâche en cours.") 
+                    if tasks_in_progress: 
+                        raise UserError(f"L'utilisateur {user.name} a déjà une tâche en cours.")
 
             if stage.testing_stage:
                 for test in self.test_ids:
                     if test.validated == False :
                         test.validated = 'intest'
                 in_progress_releases = self.project_id.release_ids.filtered(lambda r: r.state == 'in_progress')
-                # instruction_template = f"<p><h3><strong>{self.name}:</strong></h3><br/>{self.update_instruction}</p>"
                 if in_progress_releases:
                     release = in_progress_releases[0]
                     self.release_id = release.id
-                    # instruction = (release.update_instruction or '') + instruction_template
-                    # release.update_instruction = instruction
                 else: 
                     draft_releases = self.project_id.release_ids.filtered(lambda r: r.state == 'draft')
                     if draft_releases:
                         release = draft_releases[0]
                         self.release_id = release.id 
                         release.state = 'in_progress'
-                        # instruction = (release.update_instruction or '') + self.name + self.update_instruction
-                        # release.update_instruction = instruction
                     else:
-                        # instruction = self.name + self.update_instruction
                         release_data = {
                             'name': f"Release {len(self.project_id.release_ids) + 1}",
                             'project_id': self.project_id.id,
-                            # 'update_instruction': instruction,
                             'state': 'in_progress',
                         }
                         new_release = self.env['project.release'].create(release_data)
                         self.release_id = new_release.id 
                 
-        if self.stage_id.name == "En cours" or ('stage_id' in values and stage.name == "En cours"):
+        if self.stage_id.in_progress_stage:
             if 'user_ids' in values:
                 user_ids_operations = values.get('user_ids', [])
                 new_user_ids = []
@@ -75,7 +68,7 @@ class Task(models.Model):
                     for user in users:
                         tasks_in_progress = self.env['project.task'].search([
                             ('user_ids', 'in', [user.id]),
-                            ('stage_id.name', '=', 'En cours'),
+                            ('stage_id.in_progress_stage', '=', True),
                             ('id', '!=', self.id)
                         ])
                         if tasks_in_progress:
